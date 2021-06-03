@@ -11,3 +11,11 @@ permalink: /about/
 我是崔虎龙，数据库而生，数据库而立。
 
 坚信熟能生巧，努力改变人生。
+
+- name:  墨天轮
+  url: https://www.modb.pro/topic/4848
+  src: life
+
+- name: csdn
+  url: https://blog.csdn.net/dreamyuzhou
+  src: life

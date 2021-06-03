@@ -1,1 +1,8 @@
 theme: jekyll-theme-leap-day
+
+paginate: 5 # 指定每页多少条
+paginate_path: "page:num" # 指定每页的url
+
+{% highlight bash %}
+$ gem install bundler
+{% endhighlight %}

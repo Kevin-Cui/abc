@@ -56,3 +56,5 @@ defaults:
       layout: "post"
       author: "林德熙"
       permalink: "/article/:title.html"
+
+theme: jekyll-theme-cayman

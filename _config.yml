@@ -2,7 +2,7 @@
 #   Main Configs   #
 # ---------------- #
 baseurl:
-url: https://github.com/Kevin-Cui/mysqlstone
+url: https://kevin-cui.github.io/mysqlstone
 date_format: "ordinal"
 title: 码志
 subtitle: "公众号：闷骚的程序员"

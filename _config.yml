@@ -57,4 +57,4 @@ defaults:
       author: "林德熙"
       permalink: "/article/:title.html"
 
-theme: jekyll-theme-cayman
+theme: jekyll-theme-leap-day

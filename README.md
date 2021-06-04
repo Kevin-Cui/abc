@@ -15,7 +15,9 @@
 
 * 自我学习通过了MySQL OCP5.6 ， MySQL OCP5.7，MySQL OCP8.0 认证证书；
 
-格言 颠覆平庸：技术在每时每刻在更新,持续精进；
+## 格言
+
+颠覆平庸：技术在每时每刻在更新,持续精进；
 
 <!--
   ## 联系我
@@ -27,8 +29,7 @@
 -->
 ## 致谢
 
-本博客外观基于 [DONGChuan](https://dongchuan.github.io)  [码志](https://mazhuang.org)修改，
-感谢！
+本博客外观基于 [DONGChuan](https://dongchuan.github.io)  [码志](https://mazhuang.org)， 感谢！
 
 Thanks for JetBrains' support.
 <!--

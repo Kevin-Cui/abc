@@ -17,7 +17,6 @@ MySQL的监控指标；
 
 得到答案之前，先了解一下MySQL企业版怎么去解决这样的问题。
 
-
 ## 企业版SQL语句性能分析方式：
 MySQL Enterprise Monitor(简称EM）是怎么做到sql语句的性能监控。官网提供一个月使用企业版功能，可自行下载研究。
 EM对于数据库性能指标（QRTi表示查询响应时间）:
@@ -41,7 +40,7 @@ QRTi值计算例子：
 
 从上面记录可以理解到 MySQL的性能指标还是基于performance_schema库的,这里Statement Summary Tables用于收集当前和最近语句事件的表，并在汇总表中聚合这些信息。
 
-3.Statement Summary Tables介绍：
+## Statement Summary Tables介绍：
 先看下这张表汇总表信息：
 ```
 mysql> SHOW TABLES LIKE '%events_statements_summary_by_digest';

@@ -139,7 +139,6 @@ mysql> SHOW VARIABLES LIKE '%performance_schema_digests_size%';
 ## sys库视图
 statement_analysis视图查看SQL汇总统计信息(数据来源events_statements_summary_by_digest)
 视图statement_analysis查看总执行时间最长的SQL：
-![](https://kevin-cui.github.io/mysqlstone/images/posts/mysql/20210604-07.png)
 ```
 query：抽象后的SQL
 Db：语句默认数据库
@@ -158,4 +157,4 @@ sort_merge_passes：合并排序次数
 events_statements_summary_by_digest表保存的是状态数据，需要间隔时间保存起来，通过前后值的减得出结果。除了慢日志，记录在这张表里SQL语句性能差的也需要优化。
 问题SQL找到了，下一步就可以进行分析了。
 SQL优化方式：
-![](https://kevin-cui.github.io/mysqlstone/images/posts/mysql/20210604-08.png)
+![](https://kevin-cui.github.io/mysqlstone/images/posts/mysql/20210604-07.png)

@@ -94,7 +94,8 @@ SUM_CREATED_TMP_DISK_TABLES: 0
 ![](https://kevin-cui.github.io/mysqlstone/images/posts/mysql/20210604-06.png)
 备注：去掉变量并执行过的SQL语句性能指标
 
-### 启动状态：这个表由setup_consumers决定是否激活，默认是激活
+### 启动状态
+这个表由setup_consumers决定是否激活，默认是激活
 ```
 mysql> SELECT * FROM performance_schema.setup_consumers WHERE name = 'statements_digest';
 +-------------------+---------+
@@ -106,7 +107,7 @@ mysql> SELECT * FROM performance_schema.setup_consumers WHERE name = 'statements
 ```
 备注：所以基本MySQL安装下，操作的SQL语句是默认记录下来的。现在起码多了一种查看历史SQL语句排查思路。
 
-### 语句限制参数:
+### 语句限制参数
 分析的语句的长度不能超过下面的参数，否则截断
 ```sql
 mysql> SHOW VARIABLES LIKE '%max_digest_leng%';
@@ -123,7 +124,8 @@ mysql> SHOW VARIABLES LIKE '%max_digest_leng%';
 2）第二个performance_schema_max_digest_length是语句级别的，只对performance_schema起作用。
 3）如果performance_schema_max_digest_length小于max_digest_length，则相对于原始复制将被截断。
 
-### 记录行长度：erformance_schema_digests_size
+### 记录行长度
+参数：performance_schema_digests_size
 events_statements_summary_by_digest表中的最大行数。默认是10000，如果超过这个最大值，新的sql语句无法插入。试过可以TRUNCATE定期清理数据。
 ```
 mysql> SHOW VARIABLES LIKE '%performance_schema_digests_size%';

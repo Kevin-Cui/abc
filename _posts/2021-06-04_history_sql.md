@@ -1,7 +1,7 @@
 ---
 layout: post
 title: MySQL 历史SQL语句，性能问题查找
-categories: MYSQL
+categories: MySQL
 description: MySQL 历史SQL语句，性能问题查找
 keywords: MySQL history SQL
 ---

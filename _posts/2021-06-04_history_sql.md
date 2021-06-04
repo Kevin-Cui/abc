@@ -1,9 +1,9 @@
 ---
 layout: post
-title: 解决 IntelliJ IDEA 启动报 Unsupported Java Version 的问题
+title: MySQL 历史SQL语句，性能问题查找
 categories: MYSQL
-description: 解决 IntelliJ IDEA 启动报 Unsupported Java Version 的问题
-keywords: IntelliJ IDEA, Unsupported Java Version
+description: MySQL 历史SQL语句，性能问题查找
+keywords: MySQL history SQL
 ---
 
 今天用我老掉牙的 MacBook Pro 2015 跑 IDEA 时，感觉略卡，于是在网上找了一些教程来优化它的启动和运行速度。

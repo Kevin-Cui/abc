@@ -1,6 +1,6 @@
-# 码志
+# KevinCui
 
-我的个人博客：<https://mazhuang.org>，欢迎 Star 和 Fork。
+我的个人博客：<https://kevin-cui.github.io/mysqlstone>欢迎 Star 和 Fork。
 
 ## 概览
 
@@ -17,9 +17,9 @@
 
 ## 效果预览
 
-**[在线预览 &rarr;](https://mazhuang.org)**
+**[在线预览 &rarr;](https://kevin-cui.github.io/mysqlstone)**
 
-![screenshot home](https://mazhuang.org/assets/images/screenshots/home.png)
+![screenshot home](https://kevin-cui.github.io/mysqlstone/assets/images/screenshots/home.png)
 
 ## Fork 指南
 
@@ -56,7 +56,7 @@ Fork 本项目之后，还需要做一些事情才能让你的页面「正确」
 
 ## 使用文档
 
-- [本博客模板常见问题 Q & A](https://mazhuang.org/2020/05/03/blog-template-qna/)。
+- [本博客模板常见问题 Q & A](https://kevin-cui.github.io/mysqlstone/2020/05/03/blog-template-qna/)。
 
 - 在本地预览博客效果可以参考 [Setting up your Pages site locally with Jekyll][2]。
 
@@ -84,7 +84,7 @@ Fork 本项目之后，还需要做一些事情才能让你的页面「正确」
 
 ## 致谢
 
-本博客外观基于 [DONGChuan](https://dongchuan.github.io) 修改，感谢！
+本博客外观基于 [DONGChuan](https://dongchuan.github.io) [码志](https://mazhuang.org)修改，感谢！
 
 Thanks for JetBrains' support.
 

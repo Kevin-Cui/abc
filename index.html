@@ -4,11 +4,12 @@ class: home
 css: ['pages/index.css']
 comments: false
 ---
-
+{% site.url %}
 {% assign assets_base_url = site.url %}
 {% if site.cdn.jsdelivr.enabled %}
 {% assign assets_base_url = "https://cdn.jsdelivr.net/gh/" | append: site.repository | append: '@master' %}
 {% endif %}
+{% assets_base_url %}
 <section class="banner">
     <div class="collection-head">
       <div class="container">

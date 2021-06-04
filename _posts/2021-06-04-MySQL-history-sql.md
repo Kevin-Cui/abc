@@ -6,13 +6,25 @@ description: MySQL 历史SQL语句，性能问题查找
 keywords: MySQL history SQL
 ---
 
-今天MacBook Pro 2015 跑 IDEA 时，感觉略卡，于是在网上找了一些教程来优化它的启动和运行速度。
+经常会碰到应用反馈上周出现过SQL性能问题，离上周已经过了好几天，怎么查，太难了。。。
+对于MySQL了解来说排查这种问题，基本3中思路：
 
-## 遇到问题
+应用问题日志信息；
+MySQL的慢日志可以，慢日志开了吗，多少秒记录指标；
+MySQL的binlog应该会有记录，binlog保留多少天；
+MySQL的监控指标；
+以上4种都是常用的手段，除了这些方式，还能不能抓到特定的SQL语句，是否存在性能问题。 如：disk,lock,wait,join,scan,index,rows 等。
 
+得到答案之前，先了解一下MySQL企业版怎么去解决这样的问题。
+
+
+## 企业版SQL语句性能分析方式：
+MySQL Enterprise Monitor(简称EM）是怎么做到sql语句的性能监控。官网提供一个月使用企业版功能，可自行下载研究。
+EM对于数据库性能指标（QRTi表示查询响应时间）:
+![](/images/posts/java/idea-unsupported-java-version.png)
 有不少网友提到的一个措施是修改 IDEA 自身运行的 Runtime，即 JDK 版本。也决定试一下看看效果，于是安装了 `Choose Runtime` 插件，然后将默认的 JetBrains Runtime 由 IDEA 自带 JDK 11 换成了我自己安装的 JDK1.8.0_271，然后……IDEA 就再也起不来了，启动就报如下这个错误：
 
-![](/images/posts/java/idea-unsupported-java-version.png)
+![](images/posts/mysql/20210604-01.png)
 
 ```
 Unsupported Java Version

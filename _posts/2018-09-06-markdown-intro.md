@@ -631,10 +631,10 @@ https://github.com
 ### 用 Markdown 写微信公众号
 
 可以将公众号素材用 Markdown 编辑好后，贴到在线排版工具以后，复制到公众号编辑器里即可。有多种页面主题和代码主题可选择。
-
-我维护的工具地址：<https://md.mazhuang.org>
-
+<!--
+<!--
 ![微信公众号](https://raw.githubusercontent.com/mzlogin/markdown-intro/master/assets/wechat-markdown.png)
+-->
 
 ### 更多
 

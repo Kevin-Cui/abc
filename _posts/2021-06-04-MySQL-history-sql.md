@@ -21,9 +21,6 @@ MySQL的监控指标；
 ## 企业版SQL语句性能分析方式：
 MySQL Enterprise Monitor(简称EM）是怎么做到sql语句的性能监控。官网提供一个月使用企业版功能，可自行下载研究。
 EM对于数据库性能指标（QRTi表示查询响应时间）:
-![](/images/posts/java/idea-unsupported-java-version.png)
-有不少网友提到的一个措施是修改 IDEA 自身运行的 Runtime，即 JDK 版本。也决定试一下看看效果，于是安装了 `Choose Runtime` 插件，然后将默认的 JetBrains Runtime 由 IDEA 自带 JDK 11 换成了我自己安装的 JDK1.8.0_271，然后……IDEA 就再也起不来了，启动就报如下这个错误：
-
 ![](https://kevin-cui.github.io/mysqlstone/images/posts/mysql/20210604-01.png)
 
 QRTi值计算例子：

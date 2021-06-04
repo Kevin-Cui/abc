@@ -1,5 +1,8 @@
 - name: Software Engineer Keywords
   keywords:
+      - MySQL
+      - redis
+      - MongoDB     
       - Java
       - C++
       - Python
@@ -10,10 +13,3 @@
       - Android
       - Reverse Engineering
 
-- name: Windows Developer Keywords
-  keywords:
-      - Win32 SDK
-      - DuiLib
-      - WTL
-      - COM
-      - WinDbg

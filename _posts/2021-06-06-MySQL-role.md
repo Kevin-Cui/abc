@@ -123,8 +123,8 @@ ROLES_GRAPHML:返回utf8字符串xml(graphml)有用户信息，应该用户api�
 mysql>
 SELECT ROLES_GRAPHML() 
 ### 总结：
-便利用户分类管理，实际场景用的不多。
-角色和用户是互可互通，有点意思。
+- 便利用户分类管理，实际场景用的不多。
+- 角色和用户是互可互通，有点意思。
 
 参考：
 https://dev.mysql.com/doc/refman/8.0/en/roles.html

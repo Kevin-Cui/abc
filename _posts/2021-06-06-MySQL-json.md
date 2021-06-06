@@ -11,6 +11,7 @@ JSON就是一串字符串,只不过元素会使用特定的符号标注。比如
 关系型数据库实现Json难度在于，关系型数据库需要定义数据库和表结构。为了应对这一点，从MySQL 5.7开始，MySQL支恃了 JavaScript对象表示(JavaScriptObject Notation，JSON) 数据类型。之前，这类数据不是单独的数据类型，会被存储为字符串。新的JSON数据类型提供了自动验证的JSON文档以及优化的存储格式。
 
 ![](https://kevin-cui.github.io/mysqlstone/images/posts/mysql/20210606-01.png)
+
 MySQL里JSON文档以二进制格式存储，它提供以下功能：
 
 自动验证存储在JSON列中的JSON文档。无效文档产生错误。

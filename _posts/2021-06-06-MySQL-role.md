@@ -30,7 +30,7 @@ keywords: MySQL ROLE
 |参数	|说明|
 | ----- | :--------  |
 |mandatory_roles|	允许定义用户登陆时强制权的角色|
-|activate_all_roles_on_login|	|
+|activate_all_roles_on_login|	是否激活角色	|
 
 ### 角色和用户区别
 1.不管创建用户和角色都是在mysql.user表里：

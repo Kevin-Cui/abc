@@ -74,13 +74,13 @@ mysql>SELECT CAST(JSON_EXTRACT(@j5, '$.age') AS UNSIGNED);
 ### 4.JSON值聚合:
 对于JSON值的聚合， NULL值和其他数据类型一样被忽略。除MIN()、MAX()和GROUP_CONCAT()外，非null值被转换为数字类型并聚合。对于数字标量的JSON值，(取决于值)可能会出现截断和精度损失。
 
-JSON使用索引方式：
+## JSON使用索引方式：
 MySQL JSON列上无法创建索引，是通过从JSON列中提取标量值,创建索引。这样能更有效的结合MySQL优势。
 
 MySQL优化器会在匹配JSON表达式的虚拟列上寻找兼容的索引。
 在MySQL 8.0.17及以后版本中，InnoDB存储引擎支持JSON数组上的多值索引
 MySQL NDB Cluster 8.0支持JSON列和MySQL JSON函数，包括在从JSON列生成的列上创建索引，作为无法索引JSON列的解决方案。每个NDB表最多支持3个JSON列。
-1.虚拟列索引：
+### 1.虚拟列索引：
 ```
 col_name data_type [GENERATED ALWAYS] AS (expr)
   [VIRTUAL | STORED] [NOT NULL | NULL]
@@ -140,7 +140,7 @@ Message: /* select#1 */ select json_unquote(json_extract(`db1`.`jemp`.`c`,'$.nam
 1 row in set (0.00 sec)
 ```
 
-## 2.使用多值索引
+### 2.使用多值索引
 直接接口：MEMBER OF(),JSON_CONTAINS(),JSON_OVERLAPS()
 ```
 mysql> ALTER TABLE jemp ADD INDEX zips( (CAST(d->'$.zipcode' AS UNSIGNED ARRAY)) );

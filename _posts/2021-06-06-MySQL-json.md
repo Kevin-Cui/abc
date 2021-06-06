@@ -1,0 +1,196 @@
+现在很多应用环境中都能看到json灵活的影子。各阶段数据层次的递归乘此，能很好的分辨。
+一直对mysql的json 很期待的，最近才有时间研究一下。
+
+JSON了解
+JSON就是一串字符串,只不过元素会使用特定的符号标注。比如：
+
+{} 双括号表示对象，
+[] 中括号表示数组
+“” 双引号内是属性或值
+: 冒号表示后者是前者的值
+关系型数据库实现Json难度在于，关系型数据库需要定义数据库和表结构。为了应对这一点，从MySQL 5.7开始，MySQL支恃了 JavaScript对象表示(JavaScriptObject Notation，JSON) 数据类型。之前，这类数据不是单独的数据类型，会被存储为字符串。新的JSON数据类型提供了自动验证的JSON文档以及优化的存储格式。
+
+image.png
+MySQL里JSON文档以二进制格式存储，它提供以下功能：
+
+自动验证存储在JSON列中的JSON文档。无效文档产生错误。
+
+优化的存储格式。存储在JSON列中的JSON文档被转换为允许快速读取访问文档元素的内部格式。二进制格式存储的JSON值。
+
+对文档元素的快速读取访问。当服务器再次读取JSON文档时，不需要重新解析文本获取该值。通过键或数组索引直接查找子对象或嵌套值，而不需要读取文档中的所有值。
+
+存储JSON文档所需的空间大致与LONGBLOB或LONGTEXT相同
+
+存储在JSON列中的任何JSON文档的大小都仅限于max_allowed_packet系统变量的值
+
+MySQL 8.0.13之前，JSON列不能有非null的默认值。
+
+JSON操作
+数据保存到MySQL，操作方面都提供哪些支持。目前MySQL8.0版本的的Json总支持32个普通函数和 2个空间函数：
+image.png
+image.png
+
+1. 索引：
+JSON列，像其他二进制类型的列一样，不直接索引;相反，您可以在生成的列上创建索引，从JSON列中提取标量值。有关详细示例，请参见为生成的列建立索引以提供JSON列索引。
+
+MySQL优化器还会在匹配JSON表达式的虚拟列上寻找兼容的索引。
+
+在MySQL 8.0.17及以后版本中，InnoDB存储引擎支持JSON数组上的多值索引。看到多值索引。
+
+MySQL NDB Cluster 8.0支持JSON列和MySQL JSON函数，包括在从JSON列生成的列上创建索引，作为无法索引JSON列的解决方案。每个NDB表最多支持3个JSON列。
+
+2.JSON值的比较和排序:
+JSON值可以使用=、<、<=、>、>=、<>、!=和<=>操作符进行比较。
+
+JSON值不支持以下比较操作符和函数:
+BETWEEN
+IN()
+GREATEST()
+LEAST()
+
+对于列出的比较操作符和函数，一种变通方法是将JSON值转换为本地MySQL数值或字符串数据类型，以便它们具有一致的非JSON标量类型。就是说转换成需要的mysql 字段继续换算，也算是一种折中方案。
+
+JSON值的比较分为两个级别。第一级比较基于比较值的JSON类型。如果类型不同，则仅由哪个类型优先级更高来决定比较结果。如果两个值具有相同的JSON类型，则使用特定类型的规则进行第二级比较。
+BLOB > BIT > OPAQUE > DATETIME > TIME > DATE > BOOLEAN > ARRAY > OBJECT > STRING > INTEGER, DOUBLE > NULL
+
+3.JSON和非JSON值之间的转换:
+MySQL在JSON值和其他类型值之间转换时遵循的规则:
+CAST(other type AS JSON)
+结果为JSON类型的NULL值。
+
+mysql>SET @j5 = '{"id":123, "name":"kevin","age":20, "time":"2021-06-01 01:00:00"}';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>SELECT CAST(JSON_EXTRACT(@j5, '$.age') AS UNSIGNED);
++----------------------------------------------+
+| CAST(JSON_EXTRACT(@j5, '$.age') AS UNSIGNED) |
++----------------------------------------------+
+|                                           20 |
++----------------------------------------------+
+1 row in set (0.00 sec)
+
+4.JSON值聚合:
+对于JSON值的聚合， NULL值和其他数据类型一样被忽略。除MIN()、MAX()和GROUP_CONCAT()外，非null值被转换为数字类型并聚合。对于数字标量的JSON值，(取决于值)可能会出现截断和精度损失。
+
+JSON使用索引方式：
+MySQL JSON列上无法创建索引，是通过从JSON列中提取标量值,创建索引。这样能更有效的结合MySQL优势。
+
+MySQL优化器会在匹配JSON表达式的虚拟列上寻找兼容的索引。
+在MySQL 8.0.17及以后版本中，InnoDB存储引擎支持JSON数组上的多值索引
+MySQL NDB Cluster 8.0支持JSON列和MySQL JSON函数，包括在从JSON列生成的列上创建索引，作为无法索引JSON列的解决方案。每个NDB表最多支持3个JSON列。
+1.虚拟列索引：
+col_name data_type [GENERATED ALWAYS] AS (expr)
+  [VIRTUAL | STORED] [NOT NULL | NULL]
+  [UNIQUE [KEY]] [[PRIMARY] KEY]
+  [COMMENT 'string']
+VIRTUAL或STORED关键字表示列值是如何存储的，这对列的使用影响非常大:
+
+VIRTUAL:不存储列值，但在读取行时，在任何【BEFORE触发器】之后立即计算列值。虚拟列不占用存储空间，但暂居内存。目前官方里没有设置这个极限
+STORED:当插入或更新行时，将计算并存储列值。存储的列需要存储空间，并且可以建立索引。
+如果没有指定关键字，则默认为VIRTUAL。
+mysql> DROP TABLE IF EXISTS `jemp`;
+
+mysql> CREATE TABLE  `jemp` (
+        id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        c JSON,
+	d JSON,
+        g INT GENERATED ALWAYS AS  (c->"$.id") STORED,
+        INDEX i (g)
+    );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO jemp (c,d) VALUES 
+('{"id": "1", "name": "Fred"}' , '{"user":"Fred",   "user_id":1, "zipcode":"[14471,14531]"}'), 
+('{"id": "2", "name": "Wilma"}', '{"user":"Wilma",  "user_id":2, "zipcode":[24472,24532]}'  ),
+('{"id": "3", "name": "Jack"}' , '{"user":"Jack", "user_id":3, "zipcode":[34473,34533]}'    ), 
+('{"id": "4", "name": "Betty"}', '{"user":"Betty",  "user_id":4, "zipcode":[44474,44534]}'  );
+
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> EXPLAIN SELECT c->>"$.name" AS name  FROM jemp WHERE g > 2\G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: jemp
+   partitions: NULL
+         type: range
+possible_keys: i
+          key: i
+      key_len: 5
+          ref: NULL
+         rows: 2
+     filtered: 100.00
+        Extra: Using where
+1 row in set, 1 warning (0.00 sec)
+
+ERROR:
+No query specified
+
+mysql> SHOW WARNINGS\G
+*************************** 1. row ***************************
+  Level: Note
+   Code: 1003
+Message: /* select#1 */ select json_unquote(json_extract(`db1`.`jemp`.`c`,'$.name')) AS `name` from `db1`.`jemp` where (`db1`.`jemp`.`g` > 2)
+1 row in set (0.00 sec)
+2.使用多值索引
+直接接口：MEMBER OF(),JSON_CONTAINS(),JSON_OVERLAPS()
+
+mysql> ALTER TABLE jemp ADD INDEX zips( (CAST(d->'$.zipcode' AS UNSIGNED ARRAY)) );
+
+#MEMBER  OF
+mysql> EXPLAIN  SELECT * FROM jemp    WHERE  24472 MEMBER  OF(d->'$.zipcode')\G
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: jemp
+   partitions: NULL
+         type: ref
+possible_keys: zips
+          key: zips
+      key_len: 9
+          ref: const
+         rows: 1
+     filtered: 100.00
+        Extra: Using where
+1 row in set, 1 warning (0.00 sec)
+
+#JSON_CONTAINS
+mysql> EXPLAIN SELECT * FROM jemp   WHERE JSON_CONTAINS(d->'$.zipcode', CAST('[14471,14531]' AS JSON))\G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: jemp
+   partitions: NULL
+         type: range
+possible_keys: zips
+          key: zips
+      key_len: 9
+          ref: NULL
+         rows: 2
+     filtered: 100.00
+        Extra: Using where
+1 row in set, 1 warning (0.00 sec)
+
+#JSON_OVERLAPS
+mysql> EXPLAIN SELECT * FROM jemp   WHERE JSON_OVERLAPS(d->'$.zipcode', CAST('[44474,94582]' AS JSON))\G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: jemp
+   partitions: NULL
+         type: range
+possible_keys: zips
+          key: zips
+      key_len: 9
+          ref: NULL
+         rows: 2
+     filtered: 100.00
+        Extra: Using where
+1 row in set, 1 warning (0.00 sec)
+从上面例子里，数据的查询还是基于MySQL B+tree上，json只是一种数据保存的机制。通过对虚拟列方式，提供快速的访问，非常好的解决了JSON支持问题。
+
+总结
+mysql里json的结合非常实用，虚拟列索引解决了查询的性能问题。
+json大小确实个硬性问题，谨慎使用（空间大致与LONGBLOB或LONGTEXT相同,文档的大小都仅限于max_allowed_packet系统变量的值）。
+实际场景中，只能选择适中的json长度，可以考虑配合大页使用。

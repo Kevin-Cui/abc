@@ -11,25 +11,30 @@ keywords: MySQL ROLE
 数据库里角色是一个命名的权限集合，为了对许多拥有相似权限的用户进行分类管理，定义了角色的概念。与用户帐户一样，角色可以具有授予和撤消它们的特权。
 比如：当多个用户分配复杂又细致的权限时，角色的作用就体现出来了。就是把一堆权限给一个角色，新用户只要使用这个角色，就能有对应的权限了。MySQL8.0里角色是怎样实现。
 
-角色相关命令和配置方式：
+### 角色相关命令和配置方式：
 1.命令接口：
 
-命令	说明
-CREATE ROLE and DROP ROLE	创建和删除角色
-GRANT and REVOKE	是否激活角色
-SHOW GRANTS	显示 账户/角色 所拥有的 权限或者角色
-SET DEFAULT ROLE	设置账户默认使用什么角色
-SET ROLE	改变当前会话的角色
-CURRENT_ROLE()	显示当前会话的角色
-WITH ADMIN OPTION	授予和撤销其他用户或角色
+| 命令| 	说明| 
+| ----- | :--------  |
+| CREATE ROLE and DROP ROLE| 	创建和删除角色|
+| GRANT and REVOKE	| 是否激活角色|
+| SHOW GRANTS	| 显示 账户/角色 所拥有的 权限或者角色|
+| SET DEFAULT ROLE| 	设置账户默认使用什么角色|
+| SET ROLE	| 改变当前会话的角色|
+| CURRENT_ROLE()	| 显示当前会话的角色|
+| WITH ADMIN OPTION| 	授予和撤销其他用户或角色|
+
+
 2.my.cnf配置参数：
 
-参数	说明
-mandatory_roles	允许定义用户登陆时强制权的角色
-activate_all_roles_on_login	是否激活角色
-角色和用户区别
+|参数	|说明|
+| ----- | :--------  |
+|mandatory_roles|	允许定义用户登陆时强制权的角色|
+|activate_all_roles_on_login|	|
+
+### 角色和用户区别
 1.不管创建用户和角色都是在mysql.user表里：
-image.png
+![](https://kevin-cui.github.io/mysqlstone/images/posts/mysql/20210606-04.png)
 备注：区别在于account_locked，password_expired
 
 2.查了对应的mysql库发现没有特别的role相关的表，那是否可以理解 role其实也是用户，只是没有密码和锁住无法登陆
@@ -41,7 +46,7 @@ ALTER USER 'role_developer'@'%' ACCOUNT UNLOCK;
 
 看到这里，还是比较简单易懂的，大致都有了解。下面是练习SQL语句。
 
-例子
+### 例子
 #1.创建角色
 ```
 mysql>
@@ -117,7 +122,7 @@ ROLES_GRAPHML:返回utf8字符串xml(graphml)有用户信息，应该用户api�
 
 mysql>
 SELECT ROLES_GRAPHML() 
-总结：
+### 总结：
 便利用户分类管理，实际场景用的不多。
 角色和用户是互可互通，有点意思。
 参考：
